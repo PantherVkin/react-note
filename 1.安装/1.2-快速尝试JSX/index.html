@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 1. 我们给这个 <div> 加上唯一的 id HTML 属性。这将允许我们稍后用 JavaScript 代码找到它，并在其中显示一个 React 组件。 -->
+    <div id="app"></div>
+
+    <!-- 2. 加载 React。-->
+    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- 3. babel 编译 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- 4. 加载我们的 React 组件。-->
+    <script type="text/babel">
+      'use strict';
+      class LikeButton extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            liked: false
+          };
+        }
+
+        render() {
+          if (this.state.liked) {
+            return 'You liked this.';
+          }
+
+          return (
+            <button
+              onClick={() =>
+                this.setState({
+                  liked: true
+                })
+              }
+            >
+              Like
+            </button>
+          );
+        }
+      }
+
+      const domContainer = document.querySelector('#app');
+      const root = ReactDOM.createRoot(domContainer);
+      root.render(React.createElement(LikeButton));
+    </script>
+  </body>
+</html>
