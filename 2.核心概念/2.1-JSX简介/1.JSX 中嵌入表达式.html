@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 1. 我们给这个 <div> 加上唯一的 id HTML 属性。这将允许我们稍后用 JavaScript 代码找到它，并在其中显示一个 React 组件。 -->
+    <div id="app"></div>
+
+    <!-- 2. 加载 React。-->
+    <!-- React的核心库，与宿主环境无关 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- 依赖核心库，将核心的功能与页面结合 -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 3. babel 编译 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- 4. 加载我们的 React 组件。-->
+    <script type="text/babel">
+      'use strict';
+
+      const obj = <p>React Obj</p>;
+      const arr = new Array(10);
+      arr.fill(obj);
+      const d1 = <div>{arr}</div>;
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      // 把react元素（虚拟dom） 变成真实的dom对象。
+      root.render(d1);
+    </script>
+  </body>
+</html>
