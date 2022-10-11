@@ -10,42 +10,31 @@
     <div id="app"></div>
 
     <!-- 2. 加载 React。-->
-    <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- React的核心库，与宿主环境无关 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- 依赖核心库，将核心的功能与页面结合 -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
     <!-- 3. 加载我们的 React 组件。-->
     <script>
-      'use strict'
-      class LikeButton extends React.Component {
-        constructor(props) {
-          super(props)
-          this.state = {
-            liked: false
-          }
-        }
+      'use strict';
+      //创建一个span元素
+      var span = React.createElement('span', {}, '一个span元素');
+      //创建一个H1元素
+      var h1 = React.createElement(
+        'h1',
+        {
+          title: '第一个React元素'
+        },
+        'Hello',
+        'World',
+        span
+      );
 
-        render() {
-          if (this.state.liked) {
-            return 'You liked this.'
-          }
-
-          return React.createElement(
-            'button',
-            {
-              onClick: () =>
-                this.setState({
-                  liked: true
-                })
-            },
-            'Like'
-          )
-        }
-      }
-
-      const domContainer = document.querySelector('#app')
-      const root = ReactDOM.createRoot(domContainer)
-      root.render(React.createElement(LikeButton))
+      const domContainer = document.querySelector('#app');
+      const root = ReactDOM.createRoot(domContainer);
+      // 把react元素（虚拟dom） 变成真实的dom对象。
+      root.render(h1);
     </script>
   </body>
 </html>
