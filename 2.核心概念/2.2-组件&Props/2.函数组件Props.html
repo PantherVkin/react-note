@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+      function MyFuncComp(props) {
+        return (
+          <h1>
+                  姓名：{props.name}      地址：{props.address}   
+          </h1>
+        );
+      }
+
+      const obj = {
+        name: 'Panther',
+        address: 'SZ'
+      };
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      // 把react元素（虚拟dom） 变成真实的dom对象。
+      root.render(
+        <div>
+             <MyFuncComp {...obj}></MyFuncComp>  {/* 相当于 name={obj.name} address={obj.address}*/}
+        </div>
+      );
+    </script>
+  </body>
+</html>
