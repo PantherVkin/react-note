@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      class CompSetstate extends React.Component {
+        state = {
+          n: 0
+        };
+
+        handleClick = () => {
+          // 第一个参数是函数的情况
+          // cur 表示当前的状态，会混合（覆盖）掉之前的状态
+          // 该函数是异步执行
+          this.setState(
+            (cur) => ({
+              n: cur.n + 1
+            }),
+            () => {
+              //所有状态全部更新完成，并且重新渲染后执行
+              console.log('state更新完成', this.state.n);
+            }
+          );
+          this.setState(
+            (cur) => ({
+              n: cur.n + 1
+            }),
+            () => {
+              //所有状态全部更新完成，并且重新渲染后执行
+              console.log('state更新完成', this.state.n);
+            }
+          );
+          this.setState(
+            (cur) => ({
+              n: cur.n + 1
+            }),
+            () => {
+              //所有状态全部更新完成，并且重新渲染后执行
+              console.log('state更新完成', this.state.n);
+            }
+          );
+        };
+
+        render() {
+          console.log('render');
+          return (
+            <div>
+              <h1>{this.state.n}</h1>
+              <button onClick={this.handleClick}>点击+1</button>
+            </div>
+          );
+        }
+      }
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+           <CompSetstate />
+        </div>
+      );
+    </script>
+  </body>
+</html>

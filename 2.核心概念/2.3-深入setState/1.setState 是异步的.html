@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      class CompSetstate extends React.Component {
+        state = {
+          n: 0
+        };
+
+        handleClick = () => {
+          this.setState({
+            n: this.state.n + 1
+          });
+          // 改变状态的代码处于HTML事件中，是异步的；
+          // n 打印在render 之前，说明此时状态任然没有改变
+          console.log(this.state.n);
+        };
+
+        render() {
+          console.log('render');
+          return (
+            <div>
+              <h1>{this.state.n}</h1>
+              <button onClick={this.handleClick}>点击+1</button>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+           <CompSetstate />
+        </div>
+      );
+    </script>
+  </body>
+</html>
