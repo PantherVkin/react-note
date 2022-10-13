@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      // 1. 创建上下文
+      const ctx = React.createContext();
+      class A extends React.Component {
+        state = {
+          name: 'ACtx',
+          desc: 'A组件创建的上下文'
+        };
+
+        render() {
+          // 2. ctx.Provider组件创建上下文
+          // value 上下文赋值
+          return (
+            <ctx.Provider value={this.state}>
+              <div>
+                <h1>Title: A</h1> {this.props.children}           
+              </div>
+            </ctx.Provider>
+          );
+        }
+      }
+
+      // 3. 使用`Consumer`来获取上下文数据
+      function BChild() {
+        return (
+          <div>
+            <ctx.Consumer>
+              {(value) => {
+                return (
+                  <div>
+                    <h2>Title: B</h2>
+                    <p>来自A的上下文数据：{value.name}</p>               
+                  </div>
+                );
+              }}
+            </ctx.Consumer>
+               
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="App">
+            <A>
+               <BChild></BChild>       
+            </A>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+           <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>
