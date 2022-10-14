@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      // ref 使用函数
+      class Test3 extends React.Component {
+        handleClick = () => {
+          console.log(this.test3);
+          this.test3.focus();
+        };
+
+        render() {
+          return (
+            <div>
+              <input
+                type="text"
+                ref={(el) => {
+                  this.test3 = el;
+                }}
+              />
+              <button onClick={this.handleClick}>Test3点击聚焦</button>
+            </div>
+          );
+        }
+      }
+
+      function App() {
+        return (
+          <div className="App">
+            <Test3></Test3>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      class A extends React.Component {
+        method() {
+          console.log('调用了组件A的方法');
+        }
+
+        render() {
+          return <h1>组件A</h1>;
+        }
+      }
+
+      class Comp extends React.Component {
+        handleClick = () => {
+          console.log(this);
+          console.log(this.refs.txt.value);
+          this.refs.compA.method();
+        };
+
+        render() {
+          return (
+            <div>
+              <input ref="txt" type="text" />
+              <A ref="compA" />
+              <button onClick={this.handleClick}>聚焦</button>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <Comp />
+        </div>
+      );
+    </script>
+  </body>
+</html>
