@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .three-layout {
+        display: flex;
+      }
+
+      .three-layout .aside-left {
+        order: 1;
+      }
+
+      .three-layout .main {
+        order: 2;
+        flex: 1 1 auto;
+      }
+
+      .three-layout .aside-right {
+        order: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      ThreeLayout.defaultProps = {
+        leftWidth: 200,
+        rightWidth: 200,
+        minWidth: 800,
+        gap: 0 //间隙
+      };
+
+      ThreeLayout.propTypes = {
+        leftWidth: PropTypes.number,
+        rightWidth: PropTypes.number,
+        minWidth: PropTypes.number,
+        gap: PropTypes.number,
+        children: PropTypes.node,
+        left: PropTypes.node,
+        right: PropTypes.node
+      };
+
+      function ThreeLayout(props) {
+        return (
+          <div
+            className="three-layout"
+            style={{
+              minWidth: props.minWidth
+            }}
+          >
+            <div className="main">{props.children}</div>
+            <div
+              className="aside-left"
+              style={{
+                width: props.leftWidth,
+                marginRight: props.gap
+              }}
+            >
+              {props.left}
+            </div>
+            <div
+              className="aside-right"
+              style={{
+                width: props.rightWidth,
+                marginLeft: props.gap
+              }}
+            >
+              {props.right}
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div>
+            {
+              <ThreeLayout left={<h1>左边组件</h1>} right={<h1>右边组件</h1>}>
+                <p>Children 组件</p>
+              </ThreeLayout>
+            }
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>
