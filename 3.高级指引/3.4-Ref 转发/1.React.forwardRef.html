@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+      // 2. newA 把传递的ref  ，通过函数组件的第二个参数交给A处理。
+      function A(props, ref) {
+        return (
+          <div>
+            <h1 ref={ref}>Title: A</h1>
+          </div>
+        );
+      }
+
+      // 1. React.forwardRef 创建NewA
+      // const NewA = React.forwardRef(function A(props, ref) {
+      //   return (
+      //     <div>
+      //       <h1 ref={ref}>Title: A</h1>
+      //     </div>
+      //   );
+      // });
+      const NewA = React.forwardRef(A);
+
+      class App extends React.Component {
+        ARef = React.createRef();
+        componentDidMount() {
+          console.log('ref', this.ARef);
+        }
+        render() {
+          return (
+            <div className="App">
+              {/* 2. newA 把传递的ref  ，通过函数组件的第二个参数交给A处理。 */}
+              <NewA ref={this.ARef}></NewA>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>

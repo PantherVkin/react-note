@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+      // 类组件1: 通过props 把ref 传递过来。
+      class A extends React.Component {
+        render() {
+          return (
+            <div>
+              <h1 ref={this.props.refA}>Title: A</h1>
+            </div>
+          );
+        }
+      }
+
+      class App extends React.Component {
+        ARef = React.createRef();
+
+        componentDidMount() {
+          console.log('ref', this.ARef);
+        }
+        render() {
+          return (
+            <div className="App">
+              <A refA={this.ARef}></A>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>
