@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .point {
+        background: lightblue;
+        width: 500px;
+        height: 500px;
+        border: 2px solid;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+      /**
+       * 1. 通用逻辑：该组件用于监听鼠标的变化
+       */
+      class MouseListener extends React.PureComponent {
+        state = {
+          x: 0,
+          y: 0
+        };
+
+        divRef = React.createRef();
+
+        handleMouseMove = (e) => {
+          //更新x和y的值
+          const {left, top} = this.divRef.current.getBoundingClientRect();
+          const x = e.clientX - left;
+          const y = e.clientY - top;
+          this.setState({
+            x,
+            y
+          });
+        };
+
+        render() {
+          return (
+            <div ref={this.divRef} className="point" onMouseMove={this.handleMouseMove}>
+              {this.props.render ? this.props.render(this.state) : '默认值'}
+            </div>
+          );
+        }
+      }
+
+      // 2. 该属性是一个函数，函数的返回值用于渲染
+      // 函数的参数会传递为需要的数据
+      const renderPoint = (mouse) => (
+        <div>
+          横坐标：{mouse.x}，纵坐标：{mouse.y}
+        </div>
+      );
+      const renderDiv = (mouse) => (
+        <div>
+          <div
+            style={{
+              width: 100,
+              height: 100,
+              background: '#008c8c',
+              position: 'absolute',
+              left: mouse.x - 50,
+              top: mouse.y - 50
+            }}
+          ></div>
+        </div>
+      );
+
+      function App() {
+        return (
+          <div>
+            <MouseListener render={renderPoint} />
+            <MouseListener render={renderDiv} />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>

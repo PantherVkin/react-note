@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .point {
+        background: lightblue;
+        width: 500px;
+        height: 500px;
+        border: 2px solid;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+      /**
+       * 1. 高阶组件：该组件用于监听鼠标的变化
+       */
+      function withMouseListener(Comp) {
+        return class MouseListener extends React.PureComponent {
+          state = {
+            x: 0,
+            y: 0
+          };
+
+          divRef = React.createRef();
+
+          handleMouseMove = (e) => {
+            //更新x和y的值
+            const {left, top} = this.divRef.current.getBoundingClientRect();
+            const x = e.clientX - left;
+            const y = e.clientY - top;
+            this.setState({
+              x,
+              y
+            });
+          };
+
+          render() {
+            return (
+              <div ref={this.divRef} className="point" onMouseMove={this.handleMouseMove}>
+                <Comp {...this.props} x={this.state.x} y={this.state.y} />
+              </div>
+            );
+          }
+        };
+      }
+
+      function Point(props) {
+        return (
+          <div>
+            横坐标：{props.x}，纵坐标：{props.y}
+          </div>
+        );
+      }
+
+      function MoveDiv(props) {
+        return (
+          <div
+            style={{
+              width: 100,
+              height: 100,
+              background: '#008c8c',
+              position: 'absolute',
+              left: props.x - 50,
+              top: props.y - 50
+            }}
+          ></div>
+        );
+      }
+
+      // 2. 高阶组件增强功能
+      const MousePoint = withMouseListener(Point);
+      const MouseDiv = withMouseListener(MoveDiv);
+
+      function App() {
+        return (
+          <div>
+            <MousePoint />
+            <MouseDiv />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>
