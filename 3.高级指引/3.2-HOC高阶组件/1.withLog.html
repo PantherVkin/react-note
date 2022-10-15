@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+      'use strict';
+
+      class A extends React.Component {
+        //不再关注跟该组件不相关的事情
+        render() {
+          return <h1>A:{this.props.a}</h1>;
+        }
+      }
+
+      class B extends React.Component {
+        //不再关注跟该组件不相关的事情
+        render() {
+          return <h1>B:{this.props.b}</h1>;
+        }
+      }
+
+      let AComp = withLog(A, 'abc');
+      let BComp = withLog(B, 'Bcd');
+
+      /**
+       * 高阶组件
+       * @param {*} comp 组件
+       */
+      function withLog(Comp, str) {
+        return class LogWrapper extends React.Component {
+          componentDidMount() {
+            console.log(`日志：组件${Comp.name}被创建了！${Date.now()}`);
+          }
+
+          componentWillUnmount() {
+            console.log(`日志：组件${Comp.name}被销毁了！${Date.now()}`);
+          }
+
+          render() {
+            return (
+              <div>
+                <h1>{str}</h1>
+                {/* // 属性传递 */}
+                <Comp {...this.props} />
+              </div>
+            );
+          }
+        };
+      }
+
+      function App() {
+        return (
+          <div>
+            <AComp isLogin a={1} />
+            <BComp isLogin b={1} />
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.querySelector('#app'));
+      root.render(
+        <div>
+          <App />
+        </div>
+      );
+    </script>
+  </body>
+</html>
